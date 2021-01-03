@@ -2,5 +2,8 @@
 import requests
 from bs4 import BeautifulSoup
 
-first_letter = (input('Write first letter of number group name, which you want to find, if name contains "The", ignore it (for example: A or 0): ')).lower()
+group_name = (input('Write group name, which you want to find (for example: A or 0): ')).lower()
+if (group_name[:4:]) == 'the ':
+    group_name = group_name[4::] + ', ' + 'the'
+
 print('Loading...\n')

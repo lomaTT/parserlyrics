@@ -7,7 +7,7 @@ import parserlyrics
 options = Options()
 options.add_argument('--headless')
 browser = webdriver.Firefox(options=options)
-browser.get(parserlyrics.get_list_of_groups(parserlyrics.html))
+browser.get(parserlyrics.get_group_link(parserlyrics.html))
 ul = browser.find_elements_by_tag_name('ul')
 list_of_songs = []
 links = []

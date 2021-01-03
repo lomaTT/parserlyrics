@@ -2,9 +2,10 @@ import requests
 from bs4 import BeautifulSoup
 import parsermain
 
-URL = 'https://www.amalgama-lab.com/songs/' + parsermain.first_letter
+URL = 'https://www.amalgama-lab.com/songs/' + parsermain.group_name[0:1:]
 HEADERS = {'user-agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:84.0) Gecko/20100101 Firefox/84.0', 'content-type': 'text/html; charset=windows-1251'}
 
+group_link = ''
 
 def get_html(url, params=None):
     r = requests.get(url, headers=HEADERS, params=params)
@@ -25,32 +26,33 @@ def get_link(link_string):
     return correct_link
 
 
-def get_list_of_groups(html):
+def get_group_link(html):
     soup = BeautifulSoup(html.text, 'html.parser')
     items = soup.find_all('div', class_='band_name_pict')
     list_of_groups = []
+    link_of_necessary_group = ''
+    isFind = False
     for item in items:
         list_of_groups.append({
             'group': item.find('a').get_text(),
             'link':  get_link(item.find('a'))
         })
-    print('Below you can see list of groups, what we have in our database.')
     for group in list_of_groups:
-        print(group['group'])
-    name_of_necessary_group = input('Please, choose one of them and write here: ')
-    print('Loading...\n')
-    link_of_necessary_group = ''
-    for group in list_of_groups:
-        if name_of_necessary_group == group['group']:
+        if parsermain.group_name == group['group'].lower():
             link_of_necessary_group = group['link']
+            print('Finded!')
+            isFind = True
             break
+    if isFind == False:
+        print('We have not this group in our database, try again :(')
     link_of_necessary_group = URL + link_of_necessary_group[8::]
-    return link_of_necessary_group
+    group_link = link_of_necessary_group
+    return group_link
 
 
 
 def parse():
     if html.status_code == 200:
-        get_list_of_groups(html)
+        get_group_link(html)
     else:
         print('ERROR')
