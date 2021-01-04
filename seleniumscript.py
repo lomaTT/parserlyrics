@@ -27,7 +27,10 @@ for i in range(len(list_of_songs)):
 for song in songs_and_links:
     print(song['name_of_song'])
 print('Above you can see list of songs, what we have in our database')
-necessary_song = input('Print name of song, lyrics of what you want see: ').lower()
+necessary_song = input('Print name of song, lyrics of what you want see: ')
+if necessary_song == 'C':
+    print('See you next time ;)')
+    exit()
 link_of_necessary_song = ''
 while isSongFinded == False:
     for song in songs_and_links:
@@ -54,7 +57,7 @@ def find_lyrics(link):
         })
     answer = ''
     max_length_eng = int(0)
-    while (answer != 'Y') and answer != 'N':
+    while (answer != 'Y') and answer != 'N' and answer != 'C':
         answer = input('Wanna see russian translation? (Y/N): ')
     if answer == 'Y':
         for i in lyrics:
@@ -62,10 +65,12 @@ def find_lyrics(link):
                 max_length_eng = len(i['english version'])
         for i in lyrics:
             print(i['english version'], (max_length_eng - len(i['english version'])) * ' ', i['russian version'])
-    else:
+    elif answer == 'N':
         for i in lyrics:
             print(i['english version'])
-    
+    else:
+        print('See you next time! ;)')
+        exit()
         
 
 

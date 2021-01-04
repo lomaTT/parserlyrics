@@ -49,6 +49,9 @@ def get_group_link(html):
             print(group['group'])
         print('We have not this group in our database, try again :(')
         parsermain.group_name = input('Above you can see list of groups with similar starting letter, please. Choose one: ').lower()
+        if parsermain.group_name == 'c':
+            print('See you next time ;)')
+            exit()
         for group in list_of_groups:
             if parsermain.group_name == group['group'].lower():
                 link_of_necessary_group = group['link']
