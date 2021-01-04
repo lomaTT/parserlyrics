@@ -31,6 +31,7 @@ def get_group_link(html):
     items = soup.find_all('div', class_='band_name_pict')
     list_of_groups = []
     link_of_necessary_group = ''
+    group_link = ''
     isFind = False
     for item in items:
         list_of_groups.append({
@@ -43,8 +44,19 @@ def get_group_link(html):
             print('Finded!')
             isFind = True
             break
-    if isFind == False:
+    while isFind == False:
+        for group in list_of_groups:
+            print(group['group'])
         print('We have not this group in our database, try again :(')
+        parsermain.group_name = input('Above you can see list of groups with similar starting letter, please. Choose one: ').lower()
+        for group in list_of_groups:
+            if parsermain.group_name == group['group'].lower():
+                link_of_necessary_group = group['link']
+                print('Finded!')
+                isFind = True
+                break
+        
+
     link_of_necessary_group = URL + link_of_necessary_group[8::]
     group_link = link_of_necessary_group
     return group_link
